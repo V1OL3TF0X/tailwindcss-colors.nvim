@@ -7,7 +7,7 @@ This plugin highlights Tailwind CSS class names when [@tailwindcss/language-serv
 
 ## Requirements
 
-- [Neovim 0.5+](https://github.com/neovim/neovim)
+- [Neovim 0.11+](https://github.com/neovim/neovim)
 - [@tailwindcss/language-server](https://github.com/tailwindlabs/tailwindcss-intellisense)
   
   Can be installed with
@@ -67,15 +67,14 @@ To enable the plugin you have two options. You can simply call `require("tailwin
 This can be done via builtin-lsp, [lsp-config](https://github.com/neovim/nvim-lspconfig), or  [nvim-lsp-installer](https://github.com/williamboman/nvim-lsp-installer) (in their `.setup()` functions).
 
 > [lsp-config](https://github.com/neovim/nvim-lspconfig) example
-```lua
-local nvim_lsp = require("lspconfig")
 
+```lua
 local on_attach = function(client, bufnr)
   -- other stuff --
   require("tailwindcss-colors").buf_attach(bufnr)
 end
 
-nvim_lsp["tailwindcss"].setup({
+  vim.lsp.config("tailwindcss", {
   -- other settings --
   on_attach = on_attach,
 })

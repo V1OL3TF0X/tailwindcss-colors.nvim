@@ -20,6 +20,7 @@ local user_config = {
 }
 
 -- Reference to the current tailwindcss-langauge-server client
+--- @class vim.lsp.Client
 local tailwind_lsp_client
 
 -- Creates highlights if they don't already exist
@@ -149,7 +150,7 @@ function M.update_highlight(bufnr, change_data)
    local params = { textDocument = vim.lsp.util.make_text_document_params() }
 
    -- send this to the lsp client
-   tailwind_lsp_client.request("textDocument/documentColor", params, function(err, result, _, _)
+   tailwind_lsp_client:request("textDocument/documentColor", params, function(err, result, _, _)
       -- if there were no errors, update highlights
       if err == nil and result ~= nil then
          buf_set_highlights(bufnr, result, change_data)
@@ -168,7 +169,7 @@ function M.buf_attach(bufnr)
 
    if not tailwind_lsp_client then
       -- try to find the client
-      local clients = vim.lsp.buf_get_clients(bufnr)
+      local clients = vim.lsp.get_clients { buffer = bufnr }
 
       -- store a reference to the client
       for _, client in pairs(clients) do
